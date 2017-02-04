@@ -17,6 +17,23 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 // console.log(friendsObj);
 
+// How do i require the app.get from a different file?
+app.get("/", function(req, res) {
+
+  res.sendFile(path.join(__dirname, "/app/public/home.html"));
+});
+
+
+app.get("/survey", function(req, res) {
+  // res.send("Welcome to the Star Wars Page!")
+  res.sendFile(path.join(__dirname, "/app/public/survey.html"));
+});
+
+app.get("/api/friends", function(req, res) {
+  // res.sendFile(path.join(__dirname, "/app/data/friends.js"));
+  res.json(friendsObj);
+});
+
 
 // Create New Friends - takes in JSON input
 app.post("/api/new", function(req, res) {
