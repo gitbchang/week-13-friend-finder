@@ -1,11 +1,22 @@
-// DEFAULT USE ROUTE
-app.get("/", function(req, res) {
+var path = require("path");
 
-  res.sendFile(path.join(__dirname, "home.html"));
-});
+module.exports = function(app){
 
 
-app.get("/survey", function(req, res) {
-  // res.send("Welcome to the Star Wars Page!")
-  res.sendFile(path.join(__dirname, "survey.html"));
-});
+  // Direct to home page
+  app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "/../public/home.html"));
+  });
+
+
+  app.get("/survey", function(req, res) {
+    res.sendFile(path.join(__dirname, "/../public/survey.html"));
+  });
+
+  // DEFAULT ROUTE
+  // ALWAYS KEEP THIS AT THE END OR ALL PAGES WILL DEFAULT TO THIS
+  app.use(function(req,res){
+    res.sendFile(path.join(__dirname, "/../public/home.html"));
+  });
+
+};
