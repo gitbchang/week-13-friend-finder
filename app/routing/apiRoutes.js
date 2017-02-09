@@ -27,6 +27,7 @@ module.exports = function (app) {
 
     // res.json(newFriend);
     res.json(bestFriend);
+    res.end;
 
     /*
         OLD INCLUDED FUNCTION  
