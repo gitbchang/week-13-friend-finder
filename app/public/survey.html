@@ -4,134 +4,128 @@
 <head>
     <meta charset="utf-8">
     <title>Survey for Friends!</title>
-    <script
-  src="https://code.jquery.com/jquery-3.1.1.js"
-  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
-  crossorigin="anonymous"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-
+    <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 </head>
 
 <body>
     <script type="text/javascript">
-    $(document).ready(function(){
-        $("#submit").on("click", function(event) {
-            event.preventDefault();
-            var scoreArray = [];
-            var chosen = $(".chosen-select");
-            chosen.each(function(){
-                // console.log($(this)[0].value);
-                scoreArray.push($(this)[0].value);
-            });
+        $(document).ready(function () {
+            $("#submit").on("click", function (event) {
+                event.preventDefault();
+                var scoreArray = [];
+                var chosen = $(".chosen-select");
+                chosen.each(function () {
+                    // console.log($(this)[0].value);
+                    scoreArray.push($(this)[0].value);
+                });
 
-            var newFriend = {
-                name: $("#name").val().trim(),
-                photo: $("#photo").val().trim(),
-                scores: scoreArray
-            };
-            var currentURL = window.location.origin;
+                var newFriend = {
+                    name: $("#name").val().trim(),
+                    photo: $("#photo").val().trim(),
+                    scores: scoreArray
+                };
+                var currentURL = window.location.origin;
 
-            // console.log(newFriend);
-            // console.log(scoreArray);
+                // console.log(newFriend);
+                // console.log(scoreArray);
 
-            // using the below ajax method to specify send as JSON
-            $.ajax({
-                url: currentURL+"api/new",
-                type: 'POST',
-                dataType: "application/json",
-                data: newFriend,
-                success: function(data){
-                    showModal(data);                    
-                    console.log(data);                    
-                    alert("Adding friend");                 
+                // using the below ajax method to specify send as JSON
+                var request = $.ajax({
+                    url: currentURL+ "/api/new",
+                    type: 'POST',
+                    dataType: "application/json",
+                    data: newFriend,
+                    success: function(data) {
+                        // showModal(data);
+                        // $("#theModal").modal("show");
+                        console.log(data);
+                        alert("Adding friend");
 
-                   
-                },
-                failure: function(err){
-                    console.log(err);
-                }
 
-            }).done(function(data){
-                $("#friend-profile").modal("toggle");
+                    },
+                    failure: function (err) {
+                        console.log(err);
+                    }
+
+                });
+                request.done(function(data){
+                    console.log(data);
+                });
+
             });
         });
-    });
-function showModal(data){
-    // add modal here
-                    var bestFriendName = data.name;
-                    var bestFriendPhotoURL = data.photo;
-                    var finalModal = $("<div>");
-                    finalModal.addClass("modal fade");
-                    finalModal.attr("tabindex", -1);
-                    finalModal.attr("role", "dialog");
-                    finalModal.attr("id", "friend-profile");
-                    
-                    var modalDialogue = $("<div");
-                    modalDialogue.addClass("modal-dialog");
-                    modalDialogue.attr("role", "document");
 
-                    var modalContent = $("<div>");
-                    modalContent.addClass("modal-content");
+        function showModal(data) {
+            // add modal here
+            var bestFriendName = data.name;
+            var bestFriendPhotoURL = data.photo;
+            var finalModal = $("<div>");
+            finalModal.addClass("modal fade");
+            finalModal.attr("tabindex", -1);
+            finalModal.attr("role", "dialog");
+            finalModal.attr("id", "friend-profile");
 
-                    var modalHeader = $("<div>");
-                    var modalHeaderClose = $("<button>");
-                    var closespan = $("<span>");
-                    modalHeader.addClass("modal-header");                    
-                    modalHeaderClose.addClass("close");
-                    modalHeaderClose.attr("type", "button");
-                    modalHeaderClose.attr("data-dismiss", "modal");
-                    modalHeaderClose.attr("aria-label", "Close");
-                    closespan.attr("aria-hidden", "true");
-                    closespan.append("×");
-                    modalHeaderClose.append(closespan);
+            var modalDialogue = $("<div");
+            modalDialogue.addClass("modal-dialog");
+            modalDialogue.attr("role", "document");
 
-                    modalHeader.append("<h1>"+bestFriendName+"</h2>");
-                    modalHeader.append(modalHeaderClose);
+            var modalContent = $("<div>");
+            modalContent.addClass("modal-content");
 
-                    var modalBody = $("<div>");
-                    modalBody.addClass("modal-body");
-                    var friendPic = $("img");
-                    friendPic.attr("src", bestFriendPhotoURL);
-                    modalBody.append(friendPic);
+            var modalHeader = $("<div>");
+            var modalHeaderClose = $("<button>");
+            var closespan = $("<span>");
+            modalHeader.addClass("modal-header");
+            modalHeaderClose.addClass("close");
+            modalHeaderClose.attr("type", "button");
+            modalHeaderClose.attr("data-dismiss", "modal");
+            modalHeaderClose.attr("aria-label", "Close");
+            closespan.attr("aria-hidden", "true");
+            closespan.append("×");
+            modalHeaderClose.append(closespan);
 
-                    var modalFooter = $("<div>");
-                    modalFooter.addClass("modal-footer");
-                    var footerClose = $("<button>");
-                    footerClose.attr("type", "button");
-                    footerClose.addClass("btn btn-default");
-                    footerClose.attr("data-dismiss", "modal");
-                    
-                    //modal content appending
-                    modalContent.append(modalHeader);
-                    modalContent.append(modalBody);
-                    modalContent.append(modalFooter);
+            modalHeader.append("<h1>" + bestFriendName + "</h2>");
+            modalHeader.append(modalHeaderClose);
 
-                    modalDialogue.append(modalContent);
+            var modalBody = $("<div>");
+            modalBody.addClass("modal-body");
+            var friendPic = $("img");
+            friendPic.attr("src", bestFriendPhotoURL);
+            modalBody.append(friendPic);
 
-                    finalModal.append(modalDialogue);
+            var modalFooter = $("<div>");
+            modalFooter.addClass("modal-footer");
+            var footerClose = $("<button>");
+            footerClose.attr("type", "button");
+            footerClose.addClass("btn btn-default");
+            footerClose.attr("data-dismiss", "modal");
 
-                    $(".container").prepend(finalModal);
-}
+            //modal content appending
+            modalContent.append(modalHeader);
+            modalContent.append(modalBody);
+            modalContent.append(modalFooter);
 
+            modalDialogue.append(modalContent);
 
-</script>
+            finalModal.append(modalDialogue);
+
+            $(".container").prepend(finalModal);
+        }
+    </script>
     <main>
         <div class="container">
-
             <h2>Survey Questions</h2>
             <hr>
-
             <h3><strong>About You</strong></h3>
             <h4>Name (Required)</h4>
             <input type="text" name="" id="name" class="form-control" required>
-
             <h4>Link to Photo Image (Required)</h4>
             <input type="text" name="" id="photo" class="form-control" required>
-
             <hr>
-
             <h3><strong>Question 1</strong></h3>
             <h4>Your mind is always buzzing with unexplored ideas and plans.</h4>
             <select data-placeholder="" class="chosen-select" id="q1">
@@ -142,7 +136,6 @@ function showModal(data){
             <option value="4">4</option>
             <option value="5">5 (Strongly Agree)</option>
       	</select>
-
             <h3><strong>Question 2</strong></h3>
             <h4>Generally speaking, you rely more on your experience than your imagination.</h4>
             <select data-placeholder="" class="chosen-select" id="q2">
@@ -153,8 +146,6 @@ function showModal(data){
             <option value="4">4</option>
             <option value="5">5 (Strongly Agree)</option>
       	</select>
-
-
             <h3><strong>Question 3</strong></h3>
             <h4>You find it easy to stay relaxed and focused even when there is some pressure.</h4>
             <select data-placeholder="" class="chosen-select" id="q3">
@@ -165,8 +156,6 @@ function showModal(data){
             <option value="4">4</option>
             <option value="5">5 (Strongly Agree)</option>
       	</select>
-
-
             <h3><strong>Question 4</strong></h3>
             <h4>You rarely do something just out of sheer curiosity.</h4>
             <select data-placeholder="" class="chosen-select" id="q4">
@@ -177,8 +166,6 @@ function showModal(data){
             <option value="4">4</option>
             <option value="5">5 (Strongly Agree)</option>
       	</select>
-
-
             <h3><strong>Question 5</strong></h3>
             <h4>People can rarely upset you.</h4>
             <select data-placeholder="" class="chosen-select" id="q5">
@@ -189,8 +176,6 @@ function showModal(data){
             <option value="4">4</option>
             <option value="5">5 (Strongly Agree)</option>
       	</select>
-
-
             <h3><strong>Question 6</strong></h3>
             <h4>It is often difficult for you to relate to other people’s feelings.</h4>
             <select data-placeholder="" class="chosen-select" id="q6">
@@ -201,8 +186,6 @@ function showModal(data){
             <option value="4">4</option>
             <option value="5">5 (Strongly Agree)</option>
       	</select>
-
-
             <h3><strong>Question 7</strong></h3>
             <h4>In a discussion, truth should be more important than people’s sensitivities.</h4>
             <select data-placeholder="" class="chosen-select" id="q7">
@@ -213,7 +196,6 @@ function showModal(data){
             <option value="4">4</option>
             <option value="5">5 (Strongly Agree)</option>
       	</select>
-
             <h3><strong>Question 8</strong></h3>
             <h4>You rarely get carried away by fantasies and ideas.</h4>
             <select data-placeholder="" class="chosen-select" id="q8">
@@ -224,7 +206,6 @@ function showModal(data){
             <option value="4">4</option>
             <option value="5">5 (Strongly Agree)</option>
       	</select>
-
             <h3><strong>Question 9</strong></h3>
             <h4>You think that everyone’s views should be respected regardless of whether they are supported by facts or not.</h4>
             <select data-placeholder="" class="chosen-select" id="q9">
@@ -235,7 +216,6 @@ function showModal(data){
             <option value="4">4</option>
             <option value="5">5 (Strongly Agree)</option>
       	</select>
-
             <h3><strong>Question 10</strong></h3>
             <h4>You feel more energetic after spending time with a group of people.</h4>
             <select data-placeholder="" class="chosen-select" id="q10">
@@ -246,21 +226,36 @@ function showModal(data){
             <option value="4">4</option>
             <option value="5">5 (Strongly Agree)</option>
       	</select>
-
+            <div style="display:none" id="theModal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>One fine body&hellip;</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
             <br>
             <br>
-
             <!-- Submit Button -->
             <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit"><i class="fa fa-check-circle" aria-hidden="true"></i>
  Submit</button>
-
             <hr>
             <footer class="footer">
                 <div class="container">
                     <p><a href="/api/friends">API Friends List</a> | <a href="https://github.com/afhaque/friendfinder">GitHub Repo</a></p>
                 </div>
             </footer>
-
         </div>
     </main>
 </body>

@@ -13,7 +13,7 @@ module.exports = function (app) {
   // Create New Friends and post to friends list
   app.post("/api/new", function (req, res) {
     var newFriend = req.body;
-    
+
     // Fix the weirdness of the form
     newFriend["scores"] = newFriend['scores[]'];
     delete newFriend['scores[]'];
