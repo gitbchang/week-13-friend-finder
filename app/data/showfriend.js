@@ -1,7 +1,7 @@
 exports.scoreDiff = function(friendObject, existingFriends){
     var scoreDiffArray = [];
     // score array new friends
-    var newUserScores = friendObject['scores[]'];
+    var newUserScores = friendObject.scores;
     // loop through existing friends
     for(var i = 0; i < existingFriends.length;i++){   
       var scoreDiffCount = 0; 
