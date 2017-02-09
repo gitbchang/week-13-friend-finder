@@ -15,34 +15,15 @@ module.exports = function(app){
     var newFriend = req.body;
     //  use external functions
     var friendDiffScores = showFriend.scoreDiff(newFriend, friendData);
-
     var bestFriend = showFriend.getBestFriend(friendDiffScores, friendData);
-    // find the lowest score diff
-    // var lowestScore = 0;
-    // var bestFriend;
-    // lowestScore += friendDiffScores[0].scoreDifference;
-    // bestFriend = friendDiffScores[0].name;
-    // for(var i = 1; i < friendDiffScores.length;i++){
-    //   if(lowestScore > friendDiffScores[i].scoreDifference){
-    //       bestFriend = friendDiffScores[i].name;
-    //   }
-      
-    // }
-    // var bestFriendObject;
-    // for(var x = 0; x < friendData.length;x++){
-    //   if(friendData[x].name === bestFriend){
-    //     bestFriendObject = friendData[x];
-    //   }
-    // }
 
     // push new friend to existing friends array
-    friendData.push(newFriend);
-    
-    
-    res.json(newFriend);
-    // res.json(bestFriend);
+    // friendData.push(newFriend);
+      
+    // res.json(newFriend);
+    res.json(bestFriend);
   
-  /*
+/*
     OLD INCLUDED FUNCTION  
     var scoreDiffArray = [];
     // score array new friends
@@ -63,8 +44,26 @@ module.exports = function(app){
           };
           scoreDiffArray.push(friendComparison);
     }
-*/
 
+
+    // find the lowest score diff
+    var lowestScore = 0;
+    var bestFriend;
+    lowestScore += friendDiffScores[0].scoreDifference;
+    bestFriend = friendDiffScores[0].name;
+    for(var i = 1; i < friendDiffScores.length;i++){
+      if(lowestScore > friendDiffScores[i].scoreDifference){
+          bestFriend = friendDiffScores[i].name;
+      }
+      
+    }
+    var bestFriendObject;
+    for(var x = 0; x < friendData.length;x++){
+      if(friendData[x].name === bestFriend){
+        bestFriendObject = friendData[x];
+      }
+    }
+*/
 
   });
 

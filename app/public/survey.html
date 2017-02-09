@@ -36,88 +36,87 @@
             // console.log(newFriend);
             // console.log(scoreArray);
 
-            // $.post(currentURL + "/api/new", newFriend, function(data) {
-            //         console.log(data);
-            //         alert("Adding friend");
-            //     });
-
             // using the below ajax method to specify send as JSON
             $.ajax({
-                url: currentURL + "api/new",
+                url: "api/new",
                 type: 'POST',
                 dataType: "application/json",
-                data: JSON.stringify(newFriend),
+                data: newFriend,
                 success: function(data){
-                    console.log(data);
-                    // add modal here
-                    var bestFriendName = data.name;
-                    var bestFriendPhotoURL = data.photo;
-                    
-                    // var finalModal = $("<div>");
-                    // finalModal.addClass("modal fade");
-                    // finalModal.attr("tabindex", -1);
-                    // finalModal.attr("role", "dialog");
-                    
-                    // var modalDialogue = $("<div");
-                    // modalDialogue.addClass("modal-dialog");
-                    // modalDialogue.attr("role", "document");
+                    showModal(data);                    
+                    console.log(data);                    
+                    alert("Adding friend");                 
 
-                    // var modalContent = $("<div>");
-                    // modalContent.addClass("modal-content");
-
-                    // var modalHeader = $("<div>");
-                    // var modalHeaderClose = $("<button>");
-                    // var closespan = $("<span>");
-                    // modalHeader.addClass("modal-header");                    
-                    // modalHeaderClose.addClass("close");
-                    // modalHeaderClose.attr("type", "button");
-                    // modalHeaderClose.attr("data-dismiss", "modal");
-                    // modalHeaderClose.attr("aria-label", "Close");
-                    // closespan.attr("aria-hidden", "true");
-                    // closespan.append("×");
-                    // modalHeaderClose.append(closespan);
-
-                    // modalHeader.append("<h1>"+bestFriendName+"</h2>");
-                    // modalHeader.append(modalHeaderClose);
-
-                    // var modalBody = $("<div>");
-                    // modalBody.addClass("modal-body");
-                    // var friendPic = $("img");
-                    // friendPic.attr("src", bestFriendPhotoURL);
-                    // modalBody.append(friendPic);
-
-                    // var modalFooter = $("<div>");
-                    // modalFooter.addClass("modal-footer");
-                    // var footerClose = $("<button>");
-                    // footerClose.attr("type", "button");
-                    // footerClose.addClass("btn btn-default");
-                    // footerClose.attr("data-dismiss", "modal");
-                    
-                    // //modal content appending
-                    // modalContent.append(modalHeader);
-                    // modalContent.append(modalBody);
-                    // modalContent.append(modalFooter);
-
-                    // modalDialogue.append(modalContent);
-
-                    // finalModal.append(modalDialogue);
-
-                    // $(".container").append(finalModal);
-
-                    alert("Adding friend");
+                   
                 },
                 failure: function(err){
                     console.log(err);
                 }
 
+            }).done(function(data){
+                $("#friend-profile").modal("toggle");
             });
         });
     });
+function showModal(data){
+    // add modal here
+                    var bestFriendName = data.name;
+                    var bestFriendPhotoURL = data.photo;
+                    var finalModal = $("<div>");
+                    finalModal.addClass("modal fade");
+                    finalModal.attr("tabindex", -1);
+                    finalModal.attr("role", "dialog");
+                    finalModal.attr("id", "friend-profile");
+                    
+                    var modalDialogue = $("<div");
+                    modalDialogue.addClass("modal-dialog");
+                    modalDialogue.attr("role", "document");
 
+                    var modalContent = $("<div>");
+                    modalContent.addClass("modal-content");
+
+                    var modalHeader = $("<div>");
+                    var modalHeaderClose = $("<button>");
+                    var closespan = $("<span>");
+                    modalHeader.addClass("modal-header");                    
+                    modalHeaderClose.addClass("close");
+                    modalHeaderClose.attr("type", "button");
+                    modalHeaderClose.attr("data-dismiss", "modal");
+                    modalHeaderClose.attr("aria-label", "Close");
+                    closespan.attr("aria-hidden", "true");
+                    closespan.append("×");
+                    modalHeaderClose.append(closespan);
+
+                    modalHeader.append("<h1>"+bestFriendName+"</h2>");
+                    modalHeader.append(modalHeaderClose);
+
+                    var modalBody = $("<div>");
+                    modalBody.addClass("modal-body");
+                    var friendPic = $("img");
+                    friendPic.attr("src", bestFriendPhotoURL);
+                    modalBody.append(friendPic);
+
+                    var modalFooter = $("<div>");
+                    modalFooter.addClass("modal-footer");
+                    var footerClose = $("<button>");
+                    footerClose.attr("type", "button");
+                    footerClose.addClass("btn btn-default");
+                    footerClose.attr("data-dismiss", "modal");
+                    
+                    //modal content appending
+                    modalContent.append(modalHeader);
+                    modalContent.append(modalBody);
+                    modalContent.append(modalFooter);
+
+                    modalDialogue.append(modalContent);
+
+                    finalModal.append(modalDialogue);
+
+                    $(".container").prepend(finalModal);
+}
 
 
 </script>
-<!--<script src="./routing/htmlRoutes.js"></script>-->
     <main>
         <div class="container">
 
