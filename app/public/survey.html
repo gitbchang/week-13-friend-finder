@@ -38,12 +38,23 @@
                 
                 var request = $.post( currentURL+"/api/new", newFriend, null, 'json').then(function (data) {
                     console.log(data);
+                    var bestFriendName = data.name;
+                    var bestFriendPhoto = data.photo;
+                    // #bfName, #bfPhoto
+                    $("#bfPhoto").attr("src", bestFriendPhoto);
+                    $("#bfName").html(bestFriendName);
+                    $("#theModal").modal("show");
+
+
+
+                    // console.log(data.name);
+                    // console.log(data.photo);
                     
                 }, function (err) {
                     console.log(err);
                     
                 });
-                window.request = request;
+                
        
             });
         });
@@ -220,10 +231,10 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Modal title</h4>
+                            <h4 id="bfName" class="modal-title">Modal title</h4>
                         </div>
                         <div class="modal-body">
-                            <p>One fine body&hellip;</p>
+                            <p><img id="bfPhoto" src="#" alt="bestFriendPhoto"></p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
