@@ -34,87 +34,76 @@
                 // console.log(scoreArray);
 
                 // using the below ajax method to specify send as JSON
-                var request = $.ajax({
-                    url: currentURL+ "/api/new",
-                    type: 'POST',
-                    dataType: "application/json",
-                    data: newFriend,
-                    success: function(data) {
-                        // showModal(data);
-                        // $("#theModal").modal("show");
-                        console.log(data);
-                        alert("Adding friend");
-
-
-                    },
-                    failure: function (err) {
-                        console.log(err);
-                    }
-
-                });
-                request.done(function(data){
+                // THIS AREA WAS CHANGED
+                
+                var request = $.post( currentURL+"/api/new", newFriend, null, 'json').then(function (data) {
                     console.log(data);
+                    
+                }, function (err) {
+                    console.log(err);
+                    
                 });
-
+                window.request = request;
+       
             });
         });
 
-        function showModal(data) {
-            // add modal here
-            var bestFriendName = data.name;
-            var bestFriendPhotoURL = data.photo;
-            var finalModal = $("<div>");
-            finalModal.addClass("modal fade");
-            finalModal.attr("tabindex", -1);
-            finalModal.attr("role", "dialog");
-            finalModal.attr("id", "friend-profile");
+        // function showModal(data) {
+        //     // add modal here
+        //     var bestFriendName = data.name;
+        //     var bestFriendPhotoURL = data.photo;
+        //     var finalModal = $("<div>");
+        //     finalModal.addClass("modal fade");
+        //     finalModal.attr("tabindex", -1);
+        //     finalModal.attr("role", "dialog");
+        //     finalModal.attr("id", "friend-profile");
 
-            var modalDialogue = $("<div");
-            modalDialogue.addClass("modal-dialog");
-            modalDialogue.attr("role", "document");
+        //     var modalDialogue = $("<div");
+        //     modalDialogue.addClass("modal-dialog");
+        //     modalDialogue.attr("role", "document");
 
-            var modalContent = $("<div>");
-            modalContent.addClass("modal-content");
+        //     var modalContent = $("<div>");
+        //     modalContent.addClass("modal-content");
 
-            var modalHeader = $("<div>");
-            var modalHeaderClose = $("<button>");
-            var closespan = $("<span>");
-            modalHeader.addClass("modal-header");
-            modalHeaderClose.addClass("close");
-            modalHeaderClose.attr("type", "button");
-            modalHeaderClose.attr("data-dismiss", "modal");
-            modalHeaderClose.attr("aria-label", "Close");
-            closespan.attr("aria-hidden", "true");
-            closespan.append("×");
-            modalHeaderClose.append(closespan);
+        //     var modalHeader = $("<div>");
+        //     var modalHeaderClose = $("<button>");
+        //     var closespan = $("<span>");
+        //     modalHeader.addClass("modal-header");
+        //     modalHeaderClose.addClass("close");
+        //     modalHeaderClose.attr("type", "button");
+        //     modalHeaderClose.attr("data-dismiss", "modal");
+        //     modalHeaderClose.attr("aria-label", "Close");
+        //     closespan.attr("aria-hidden", "true");
+        //     closespan.append("×");
+        //     modalHeaderClose.append(closespan);
 
-            modalHeader.append("<h1>" + bestFriendName + "</h2>");
-            modalHeader.append(modalHeaderClose);
+        //     modalHeader.append("<h1>" + bestFriendName + "</h2>");
+        //     modalHeader.append(modalHeaderClose);
 
-            var modalBody = $("<div>");
-            modalBody.addClass("modal-body");
-            var friendPic = $("img");
-            friendPic.attr("src", bestFriendPhotoURL);
-            modalBody.append(friendPic);
+        //     var modalBody = $("<div>");
+        //     modalBody.addClass("modal-body");
+        //     var friendPic = $("img");
+        //     friendPic.attr("src", bestFriendPhotoURL);
+        //     modalBody.append(friendPic);
 
-            var modalFooter = $("<div>");
-            modalFooter.addClass("modal-footer");
-            var footerClose = $("<button>");
-            footerClose.attr("type", "button");
-            footerClose.addClass("btn btn-default");
-            footerClose.attr("data-dismiss", "modal");
+        //     var modalFooter = $("<div>");
+        //     modalFooter.addClass("modal-footer");
+        //     var footerClose = $("<button>");
+        //     footerClose.attr("type", "button");
+        //     footerClose.addClass("btn btn-default");
+        //     footerClose.attr("data-dismiss", "modal");
 
-            //modal content appending
-            modalContent.append(modalHeader);
-            modalContent.append(modalBody);
-            modalContent.append(modalFooter);
+        //     //modal content appending
+        //     modalContent.append(modalHeader);
+        //     modalContent.append(modalBody);
+        //     modalContent.append(modalFooter);
 
-            modalDialogue.append(modalContent);
+        //     modalDialogue.append(modalContent);
 
-            finalModal.append(modalDialogue);
+        //     finalModal.append(modalDialogue);
 
-            $(".container").prepend(finalModal);
-        }
+        //     $(".container").prepend(finalModal);
+        // }
     </script>
     <main>
         <div class="container">
@@ -253,7 +242,7 @@
             <hr>
             <footer class="footer">
                 <div class="container">
-                    <p><a href="./api/friends">API Friends List</a> | <a href="https://github.com/afhaque/friendfinder">GitHub Repo</a></p>
+                    <p><a href="/api/friends">API Friends List</a> | <a href="https://github.com/afhaque/friendfinder">GitHub Repo</a></p>
                 </div>
             </footer>
         </div>

@@ -8,10 +8,9 @@ module.exports = function (app) {
     res.json(friendData);
   });
 
-
-
   // Create New Friends and post to friends list
   app.post("/api/new", function (req, res) {
+
     var newFriend = req.body;
 
     // Fix the weirdness of the form
@@ -27,7 +26,7 @@ module.exports = function (app) {
 
     // res.json(newFriend);
     res.json(bestFriend);
-    res.end;
+    
 
     /*
         OLD INCLUDED FUNCTION  
